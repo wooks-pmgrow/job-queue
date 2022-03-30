@@ -4,7 +4,16 @@ import { Queue } from 'bull';
 
 @Controller('audio')
 export class AudioController {
-  constructor(@InjectQueue('audio') private readonly audioQueue: Queue) {}
+  constructor(@InjectQueue('audio') private readonly audioQueue: Queue) {
+    audioQueue.on('error', (error) => {
+      console.log('--------------------------------------------');
+      console.log(error)
+      console.log('--------------------------------------------');
+    });
+    audioQueue.on('failed', (job, error) => { console.log('failed ' + error)});
+    audioQueue.on('waiting', (job) => { console.log('waiting ')});
+    audioQueue.on('removed', (job) => { console.log('removed ')});
+  }
 
   @Post('transcode')
   async transcode() {
