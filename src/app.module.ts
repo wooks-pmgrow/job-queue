@@ -8,9 +8,24 @@ import { AudioModule } from './audio/audio.module';
   imports: [
     BullModule.forRoot({
       redis: {
-        host: 'localhost',
-        port: 6379,
-      },
+        //host: 'redis-1',
+        //port: 6379,
+        sentinels: [
+          {
+            host: 'redis-1',
+            port: 26379,
+          },
+          {
+            host: 'redis-2',
+            port: 26379,
+          },
+          {
+            host: 'redis-3',
+            port: 26379,
+          },
+        ],
+              name: 'turple',
+          },
     }),
     AudioModule,
   ],
