@@ -12,7 +12,11 @@ export class AudioController {
     });
     audioQueue.on('failed', (job, error) => { console.log('failed ' + error)});
     audioQueue.on('waiting', (job) => { console.log('waiting ')});
-    audioQueue.on('removed', (job) => { console.log('removed ')});
+    audioQueue.on('stalled', (job, error) => { console.log('stalled ')});
+    audioQueue.on('removed', (job) => { console.log('removed')});
+    audioQueue.on('completed', (job, err) => { 
+      console.info( `Job in ${job.queue.name} completed for: ${job.data.message}`);
+    });
   }
 
   @Post('transcode')
